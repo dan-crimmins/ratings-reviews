@@ -28,19 +28,16 @@ class RR_Api_Request {
 	
 	public static function factory($args) {
 		
-		return new Products_Api_Request($args);
+		return new RR_Api_Request($args);
 	}
 	
 	public function user() {
 		
 		$request = RR_Api_Base::factory('user')
-								->{$this->_args['type']}($this->_args['term']);
+								->{$this->_args['type']}($this->_args['term'])
+								->load();
 									
-		
-		$request->load();
-		
-		
-		$this->_obj = new Products_Api_Results($request);
+		$this->_obj = new RR_Api_Results($request);
 			
 	}
 	
@@ -61,7 +58,7 @@ class RR_Api_Request {
 		if($args['api'] == 'user') {
 			
 			if(! is_numeric($args['term']))
-				throw new Exception('The term arg must be numeric. Term should SSO guid for the user');
+				throw new Exception('The term arg must be numeric. Term should be the SSO guid for the user');
 		} 
 		
 	}
