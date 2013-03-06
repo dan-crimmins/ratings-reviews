@@ -1,4 +1,5 @@
 <?php
+
 class RR_Api_Base {
 	
 	/**
@@ -8,8 +9,18 @@ class RR_Api_Base {
 	 */
 	protected $_params = array();
 	
+	/**
+	 * _uri_params - stores uri path elements as array.
+	 * 
+	 * @var array
+	 */
 	protected $_uri_params = array();
 	
+	
+	/**
+	 * _endpoints - array of endpoints by environment
+	 * @var array
+	 */
 	protected $_endpoints = array('dev'		=> 'http://revapp301p.dev.ch3.s.com:8088/rr/',
 									'qa'	=> '',
 									'prod'	=> '');
@@ -56,6 +67,11 @@ class RR_Api_Base {
 	 */
 	protected $_data = array();
 	 
+	/**
+	 * _curl_options
+	 * 
+	 * @var array
+	 */
 	protected $_curl_options = array(
 							        CURLOPT_RETURNTRANSFER  => 1,
 							        CURLOPT_CONNECTTIMEOUT => 300,          // timeout on connect 
@@ -69,16 +85,16 @@ class RR_Api_Base {
 		//$options = get_option('SHC_Products_Plugin');
 	
 	}
-
+	
 	public static function factory($api_name) {
 		
-		$class = 'Products_Api_' . ucfirst(strtolower($api_name));
+		$class = 'RR_Api_' . ucfirst(strtolower($api_name));
 		
 		if(class_exists($class))
 		
 			return new $class;
 	}
-	
+
 	
 	protected function _param($name, $value = null) {
 		
@@ -163,8 +179,9 @@ class RR_Api_Base {
 		
 		$end = $this->_offset + $this->_results_per_request;
 		
-		$this->_param(array('startIndex' => $this->_offset + 1,
-							'endIndex'	 => $end));
+		//Set the querystring params for pagination
+		/*$this->_param(array('startIndex' => $this->_offset + 1,
+							'endIndex'	 => $end));*/
 	
 		return $this;
 		
@@ -195,24 +212,22 @@ class RR_Api_Base {
 	
 	protected function _uri_params($param = null) {
 		
-		if(is_array($param)) {
+		//Set
+		if($param !== null) {
 			
-			foreach($name as $key=>$val) {
-				
-				$this->_params[$key] = $val;
-			}
+			$this->_uri_params = array_merge($this->_uri_params, (array) $param);
 			
-		} else {
-			
-			$this->_params[$name] = $value;
+			return $this;
 		}
 		
-		return $this;
+		//Get: return string of uri path
+		if(count($this->uri_params))
+			return implode('/', $this->_uri_params);
 	}
 	
 	protected function build_url() {
 		
-		$this->_url = $this->_endpoint . $this->_method() . '?' . http_build_query($this->_params);
+		$this->_url = $this->_endpoint . $this->_method() . $this->_uri_params() . ((count($this->_params)) ? '?' . http_build_query($this->_params) : '');
 	}
 	
 	protected function _map_options() {
