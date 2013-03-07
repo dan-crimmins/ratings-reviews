@@ -221,7 +221,8 @@ class RR_Api_Base {
 		}
 		
 		//Get: return string of uri path
-		if(count($this->uri_params))
+		if(count($this->_uri_params))
+		
 			return implode('/', $this->_uri_params);
 	}
 	
