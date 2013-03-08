@@ -8,6 +8,11 @@ class RR_User_Reviews {
 	
 	public function __construct($sso_guid) {
 		
+		if(! is_plugin_active('products/plugin.php')) {
+			
+			throw new Exception('RR_User_Reviews requires the Products plugin.');
+		}
+		
 		$this->_guid = $sso_guid;
 		$this->_results();
 	}
