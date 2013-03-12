@@ -54,7 +54,7 @@ class RR_User_Reviews {
 			
 				for($i = 1; $i < $this->_page; $i++) {
 					
-					$this->_offset = $this->_offset + $this->posts_per_page;
+					$this->_offset = $this->_offset + $this->_posts_per_page;
 				}
 				
 					if(isset($this->results[$this->_offset])) {
