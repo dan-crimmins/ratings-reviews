@@ -2,9 +2,23 @@
 
 class RR_User_Reviews {
 	
-	public $results = null;
+	public $results;
 	
 	protected $_guid;
+	
+	public $next_page;
+	
+	public $prev_page;
+	
+	public $is_cached = false;
+	
+	protected $_posts_per_page = 20;
+	
+	protected $_offset = 0;
+	
+	protected $_page = 1;
+	
+	
 	
 	public function __construct($sso_guid) {
 		
@@ -22,12 +36,60 @@ class RR_User_Reviews {
 		return new RR_User_Reviews($sso_guid);
 	}
 	
+	public function page($page) {
+		
+		$this->_page = $page;
+	}
+	
+	protected function _paginate() {
+		
+		$num_results = count((array) $this->results);
+		$end = $num_results - 1;
+		
+		if($num_results > $this->_posts_per_page) {
+			
+			$total_pages = ceil($num_results / $this->_posts_per_page);
+			
+			if($this->_page <= $total_pages) {
+			
+				for($i = 1; $i < $this->_page; $i++) {
+					
+					$this->_offset = $this->_offset + $this->posts_per_page;
+				}
+				
+					if(isset($this->results[$this->_offset])) {
+						
+						$last = (($this->_offset + $this->_posts_per_page) > $end) ? $end : $this->_posts_per_page;
+						$this->results = array_slice($this->results, $this->_offset, $last);
+						
+						$this->next_page = (($this->_page + 1) <= $total_pages) ? $this->_page + 1 : null;
+						$this->prev_page = ($this->_page != 1) ? ($this->_page - 1) : null;
+					}
+			}
+		}  
+		
+			
+	}
+	
 	protected function _results() {
 		
-		$rr = RR_Api_Request::factory(array('api' 	=> 'user',
-											  'type'	=> 'userid',
-											  'term'	=> $this->_guid))
-								->response();
+		if(! $cached = RR_Cache::factory($this->_guid)->get()->data) {
+		
+			$rr = RR_Api_Request::factory(array('api' 	=> 'user',
+												  'type'	=> 'userid',
+												  'term'	=> $this->_guid))
+									->response();
+									
+		
+		} else {
+			
+			$this->results = $cached;
+			$this->is_cached = true;
+			
+			$this->_paginate();
+			
+			return $this;
+		}
 								
 		if($rr->success && $rr->num_reviews > 0) {
 			
@@ -57,6 +119,10 @@ class RR_User_Reviews {
 			}
 			
 			$this->results = $rr->reviews = $reviews;
+			
+			$this->_paginate();
+			
+			RR_Cache::factory($this->_guid)->set($this->results);
 		} 
 		
 	}

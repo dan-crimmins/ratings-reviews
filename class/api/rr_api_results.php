@@ -125,14 +125,12 @@ class RR_Api_Results {
 	protected function _set_properties() {
 		
 		if($this->api_data_type == 'user')
-			
 			$this->_set_user_properties();
 		
 	}
 	
 	protected function _set_user_properties() {
-		
-		if($this->success)
+	
 			$this->num_reviews = $this->_raw_response->data->review_breakdown[0]->count;
 			$this->reviews = $this->_raw_response->data->review_breakdown[0]->reviews;
 	}

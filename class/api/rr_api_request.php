@@ -8,6 +8,8 @@ class RR_Api_Request {
 	protected $_args;
 	
 	protected $_obj;
+	
+	public $cached = false;
 
 	public function __construct($args) {
 		
@@ -36,6 +38,7 @@ class RR_Api_Request {
 		$request = RR_Api_Base::factory('user')
 								->{$this->_args['type']}($this->_args['term'])
 								->load();
+		
 									
 		$this->_obj = new RR_Api_Results($request);
 			

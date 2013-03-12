@@ -19,7 +19,7 @@ class RR_Api_User extends RR_Api_Base implements RR_Api_Type {
 	}
 	
 	public function load() {
-		
+			
 		$this->_load();
 		
 		return $this;

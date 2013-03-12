@@ -280,5 +280,4 @@ class RR_Api_Base {
 		
 	}
 	
-	
 }
