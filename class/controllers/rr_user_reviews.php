@@ -111,10 +111,15 @@ class RR_User_Reviews {
 					$prod_data->brandname = $product->brandname;
 					$prod_data->rating = $product->rating;
 					$prod_data->numreview = $product->numreview;
+					$prod_data->storeid = $product->storeid;
+					$prod_data->catalogid = $product->catalogid;
+					$prod_data->product_uri = $product->product_uri;
 				}
 				
 				
 				$reviews[$key]->product_data = $prod_data;
+				$reviews[$key]->edit_link = $this->_edit_link($reviews[$key]);
+				
 					
 			}
 			
@@ -132,6 +137,12 @@ class RR_User_Reviews {
 		return Products_Api_Request::factory(array('api' => 'detail',
 													'term' 	=> $partnumber))
 									->response();
+	}
+	
+	protected function _edit_link($review) {
+		
+		return "https://www.{$review->origin_site}/shc/s/ProfileCreateReview?reviewId={$review->review_id}&catalogId={$review->product_data->catalogid}&langId=-1&requestType=edit_review&storeId={$review->product_data->storeid}&i_cntr=1363128024441&loginFlow=Yes";
+		
 	}
 	
 	
