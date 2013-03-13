@@ -22,14 +22,14 @@ class RR_Api_Base {
 	 * @var array
 	 */
 	protected $_endpoints = array('dev'		=> 'http://revapp301p.dev.ch3.s.com:8088/rr/',
-									'qa'	=> '',
-									'prod'	=> '');
+									'qa'	=> 'http://www301d.qa.ch3.s.com:2080/rr/',
+									'prod'	=> 'http://revapivip.prod.ch4.s.com/rr/');
 	
 	/**
 	 * _endpoint - the API endpoint URL. Defaults to dev
 	 * @var string			
 	 */
-	protected $_endpoint = 'http://revapp301p.dev.ch3.s.com:8088/rr/';
+	protected $_endpoint = 'http://revapivip.prod.ch4.s.com/rr/';//'http://revapp301p.dev.ch3.s.com:8088/rr/';
 	
 	/**
 	 * _method - appended to end of _endpoint (search or detail)
