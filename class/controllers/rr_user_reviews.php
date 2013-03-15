@@ -18,6 +18,8 @@ class RR_User_Reviews {
 	
 	protected $_page = 1;
 	
+	protected $_store;
+	
 	
 	
 	public function __construct($sso_guid) {
@@ -27,8 +29,9 @@ class RR_User_Reviews {
 			throw new Exception('RR_User_Reviews requires the Products plugin.');
 		}
 		
+		$this->_store = (stripos(get_bloginfo('name'), 'sears')) ? 'sears.com' : 'kmart.com';
 		$this->_guid = $sso_guid;
-		$this->_results();
+		
 	}
 	
 	public static function factory($sso_guid) {
@@ -39,6 +42,8 @@ class RR_User_Reviews {
 	public function page($page) {
 		
 		$this->_page = $page;
+		
+		return $this;
 	}
 	
 	protected function _paginate() {
@@ -71,7 +76,7 @@ class RR_User_Reviews {
 			
 	}
 	
-	protected function _results() {
+	public function get() {
 		
 		if(! $cached = RR_Cache::factory($this->_guid)->get()->data) {
 		
@@ -86,6 +91,7 @@ class RR_User_Reviews {
 			$this->results = $cached;
 			$this->is_cached = true;
 			
+			$this->_get_store_reviews();
 			$this->_paginate();
 			
 			return $this;
@@ -125,11 +131,13 @@ class RR_User_Reviews {
 			
 			$this->results = $rr->reviews = $reviews;
 			
+			$this->_get_store_reviews();
 			$this->_paginate();
 			
 			RR_Cache::factory($this->_guid)->set($this->results);
-		} 
-		
+		}
+
+		return $this;	
 	}
 	
 	protected function _get_product_data($partnumber) {
@@ -145,5 +153,15 @@ class RR_User_Reviews {
 		
 	}
 	
+	protected function _get_store_reviews() {	
+		
+		foreach((array)$this->results as $key=>$result) {
+			
+			if($result->origin_site != $this->_store) {
+				
+				unset($this->results[$key]);
+			}
+		}
+	}
 	
 }

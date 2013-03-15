@@ -62,6 +62,8 @@ class RR_Api_Results {
 		if(is_a($obj, 'RR_Api_User'))
 			$this->api_data_type = 'user';
 			
+		if(is_a($obj, 'RR_Api_Recent'))
+			$this->api_data_type = 'recent';
 	}
 	
 	protected function _is_success($obj) {
@@ -126,13 +128,23 @@ class RR_Api_Results {
 		
 		if($this->api_data_type == 'user')
 			$this->_set_user_properties();
+			
+		if($this->api_data_type == 'recent')
+			$this->_set_recent_properties();
 		
 	}
 	
 	protected function _set_user_properties() {
 	
-			$this->num_reviews = $this->_raw_response->data->review_breakdown[0]->count;
-			$this->reviews = $this->_raw_response->data->review_breakdown[0]->reviews;
+		$this->num_reviews = $this->_raw_response->data->review_breakdown[0]->count;
+		$this->reviews = $this->_raw_response->data->review_breakdown[0]->reviews;
 	}
+	
+	protected function _set_recent_properties() {
+		
+		$this->num_reviews = null;
+		$this->reviews = null;
+	}
+	
 	
 }

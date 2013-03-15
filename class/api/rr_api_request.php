@@ -2,7 +2,8 @@
 
 class RR_Api_Request {
 	
-	protected $_allowed_args = array('api'		=> array('user'),
+	protected $_allowed_args = array('api'		=> array('user',
+														 'recent'),
 									 'type'		=> array('userid'));
 	
 	protected $_args;
@@ -42,6 +43,16 @@ class RR_Api_Request {
 									
 		$this->_obj = new RR_Api_Results($request);
 			
+	}
+	
+	public function recent() {
+		
+		$request = RR_Api_Base::factory('recent')
+								->{$this->_args['type']}($this->_args['term'])
+								->load();
+		
+									
+		$this->_obj = new RR_Api_Results($request);
 	}
 	
 	
