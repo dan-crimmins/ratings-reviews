@@ -86,11 +86,26 @@ class Recent_Reviews_Widget extends WP_Widget {
        								->get()
        								->results;
         				    
-        /*include ('views/recent-activities.php');	*/
-		/*echo '<pre>';
-		var_dump($reviews);*/
        								
-       	echo 'Recent Reviews';
+       	echo '<h2>'.$recent_reviews_title.'</h2>';
+       	
+       	if($reviews) {
+       		
+       		echo '<ul>';
+       		
+       		foreach($reviews as $review) {
+       			 
+       			echo '<li>' . $review->reviews[0]->summary . '</li>';
+       			
+       		}
+       		
+       		echo '</ul>';
+       		
+       	} else {
+       		
+       		echo 'No Reviews';
+       	}
+       	
         $output = ob_get_clean();
         
         echo $output;

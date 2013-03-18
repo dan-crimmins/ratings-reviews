@@ -22,7 +22,7 @@ class RR_Recent_Reviews {
 	
 	public function get() {
 		
-		$cache_key = 'recent-' . date('Ymd');
+		$cache_key = md5('recent-' . get_bloginfo('name') . date('Ymd'));
 		
 		if(! $cached = RR_Cache::factory($cache_key)->get()->data) {
 		
@@ -54,8 +54,5 @@ class RR_Recent_Reviews {
 		
 		return $this;
 	}
-	
-	
-	
 	
 }

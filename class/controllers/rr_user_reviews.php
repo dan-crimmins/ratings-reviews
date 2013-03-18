@@ -78,7 +78,9 @@ class RR_User_Reviews {
 	
 	public function get() {
 		
-		if(! $cached = RR_Cache::factory($this->_guid)->get()->data) {
+		$cache_key = md5(get_bloginfo('name') . '-' . $this->_guid);
+		
+		if(! $cached = RR_Cache::factory($cache_key)->get()->data) {
 		
 			$rr = RR_Api_Request::factory(array('api' 	=> 'user',
 												  'type'	=> 'userid',
@@ -134,7 +136,7 @@ class RR_User_Reviews {
 			$this->_get_store_reviews();
 			$this->_paginate();
 			
-			RR_Cache::factory($this->_guid)->set($this->results);
+			RR_Cache::factory($cache_key)->set($this->results);
 		}
 
 		return $this;	
