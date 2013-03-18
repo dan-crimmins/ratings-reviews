@@ -29,7 +29,7 @@ class RR_Api_Base {
 	 * _endpoint - the API endpoint URL. Defaults to dev
 	 * @var string			
 	 */
-	protected $_endpoint = 'http://revapivip.prod.ch4.s.com/rr/';//'http://revapp301p.dev.ch3.s.com:8088/rr/';
+	protected $_endpoint = 'http://revapp301p.dev.ch3.s.com:8088/rr/';
 	
 	/**
 	 * _method - appended to end of _endpoint (search or detail)
@@ -83,6 +83,7 @@ class RR_Api_Base {
 		
 		//get plugin options, set properties, and paramseveral 
 		//$options = get_option('SHC_Products_Plugin');
+		$this->success = false;
 	
 	}
 	

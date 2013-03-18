@@ -187,6 +187,29 @@ class RR_Utilities {
 		}
 	}
 	
+	public static function load_widgets() {
+		
+		$widgets = scandir(SHC_RR_WIDGETS);
+		
+		if($widgets) {
+			
+			ob_start();
+			
+			$exclude = array('...', '..', '.');
+			
+			foreach($widgets as $widget) {
+				
+				if(is_file(SHC_RR_WIDGETS . $widget) && ! in_array($widget, $exclude))
+					
+					require_once SHC_RR_WIDGETS . $widget;
+			}
+			
+			$out = ob_get_clean();
+			return $out;
+		}
+		
+	}
+	
 	public static function install() {
 			
 		

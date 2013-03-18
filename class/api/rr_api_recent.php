@@ -7,12 +7,13 @@ class RR_Api_Recent extends RR_Api_Base implements RR_Api_Type {
 		
 		parent::__construct();
 		
-		$this->_method('v1/reviews/today');
+		$this->_method('v1/reviews/today.json');
 	}
 	
 	public function store($store) {
 		
 		$this->_param('originSite', $store);
+		$this->_param('targetType', 'product');
 		
 		return $this;
 	}

@@ -70,8 +70,6 @@ class RR_Api_Results {
 		
 		return $obj->success;
 			
-			
-		//Add a check here for ratings returned
 	}
 	
 	/**
@@ -142,8 +140,8 @@ class RR_Api_Results {
 	
 	protected function _set_recent_properties() {
 		
-		$this->num_reviews = null;
-		$this->reviews = null;
+		$this->num_reviews = count((array)$this->_raw_response->data);
+		$this->reviews = $this->_raw_response->data;
 	}
 	
 	
