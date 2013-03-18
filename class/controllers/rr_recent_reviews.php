@@ -12,7 +12,7 @@ class RR_Recent_Reviews {
 	
 	public function __construct() {
 		
-		$this->_store = (stripos(get_bloginfo('name'), 'sears')) ? 'sears.com' : 'kmart.com';
+		$this->_store = ((stripos(get_bloginfo('name'), 'sears')) !== false) ? 'sears.com' : 'kmart.com';
 	}
 	
 	public static function factory() {

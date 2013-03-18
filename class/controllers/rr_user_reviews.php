@@ -29,7 +29,7 @@ class RR_User_Reviews {
 			throw new Exception('RR_User_Reviews requires the Products plugin.');
 		}
 		
-		$this->_store = (stripos(get_bloginfo('name'), 'sears')) ? 'sears.com' : 'kmart.com';
+		$this->_store = ((stripos(get_bloginfo('name'), 'sears')) !== false) ? 'sears.com' : 'kmart.com';
 		$this->_guid = $sso_guid;
 		
 	}
