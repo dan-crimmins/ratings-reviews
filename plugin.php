@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Sears/Kmart Ratings & Reviews
-Description: Consumes Data from the Sears/Kmart Ratings&Reviews API
+Description: Consumes Data from the Sears/Kmart Ratings & Reviews API
 Version: 1.0
 Author: Dan Crimmins
 */
