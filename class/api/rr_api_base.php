@@ -81,8 +81,9 @@ class RR_Api_Base {
 	
 	public function __construct() {
 		
-		//get plugin options, set properties, and paramseveral 
-		//$options = get_option('SHC_Products_Plugin');
+		//get plugin options
+		$options = RR_Utilities::options();
+		$this->_endpoint = $this->_endpoints[$options['api_env']];
 		$this->success = false;
 	
 	}

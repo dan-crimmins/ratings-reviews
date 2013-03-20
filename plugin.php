@@ -10,6 +10,7 @@ Author: Dan Crimmins
 define('SHC_RR_PATH', WP_PLUGIN_DIR . '/ratings-review/');
 define('SHC_RR_CLASS', SHC_RR_PATH . 'class/');
 define('SHC_RR_WIDGETS', SHC_RR_PATH . 'widgets/');
+define('SHC_RR_VIEWS', SHC_RR_PATH . 'views/');
 
 //Prefix for settings and stuff
 define('SHC_RR_PREFIX', 'shc_rr_');
@@ -23,6 +24,9 @@ spl_autoload_register(array('RR_Utilities', 'autoload'));
 //Install / Uninstall
 register_activation_hook(__FILE__, array('RR_Utilities', 'install'));
 register_deactivation_hook(__FILE__, array('RR_Utilities', 'uninstall'));
+
+//Instantiate objects with hooks
+RR_Utilities::init();
 
 //Load widgets
 RR_Utilities::load_widgets();

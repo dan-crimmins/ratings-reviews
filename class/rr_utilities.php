@@ -11,21 +11,14 @@ class RR_Utilities {
 	 * $_option_defaults - default option values
 	 * @var array
 	 */
-	public static $_option_defaults = array('api_key'					=> '06749c96f1e1bfadfeca4a02b4120253',
-											'store'						=> 'Sears',
-											'updater_log_root'			=> '/appl/wordpress/log/',
-											'updater_email_recipient'	=> 'phpteam@searshc.com');
+	public static $_option_defaults = array('api_env'	=> 'prod');
 	
 	/** 
 	 * $_classes - Array of classes to load on init 
 	 * @var array
 	 * @see init()
 	 */
-	public static $_classes = array();/*array('settings_admin'			=> 'Products_Admin_Settings',
-									'product_register'			=> 'Product_Post_Type',
-									'product_importer'			=> 'Products_Admin_Import',
-									'product_enqueue_assets'	=> 'Product_Assets');*/
-	
+	public static $_classes = array('settings_admin'	=> 'RR_Admin_Settings');
 	/**
 	 * _option_name() - Sets $_option_name
 	 * 
@@ -136,7 +129,7 @@ class RR_Utilities {
 	 */
 	public static function view($view, array $args = null, $return = false) {
 		
-		$file = SHC_PRODUCTS_VIEWS . $view . '.php';
+		$file = SHC_RR_VIEWS . $view . '.php';
 		
 		
 		if($args !== null)
@@ -212,12 +205,12 @@ class RR_Utilities {
 	
 	public static function install() {
 			
-		
+		update_option(SHC_RR_PREFIX . 'settings', self::$_option_defaults);
 	}
 	
 	public static function uninstall() {
 			
-		
+		delete_option(SHC_PRODUCTS_PREFIX . 'settings');
 	}
 	
 	
