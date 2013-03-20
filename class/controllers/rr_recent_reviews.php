@@ -33,7 +33,7 @@ class RR_Recent_Reviews {
 									
 			if($rr->success && $rr->num_reviews > 0) {
 				
-				$this->results = array_slice($rr->reviews, 0, $this->_limit);
+				$this->results = array_slice($this->_set_all_reviews_uri($rr->reviews), 0, $this->_limit);
 				RR_Cache::factory($cache_key)->set($this->results);
 			}
 									
@@ -53,6 +53,20 @@ class RR_Recent_Reviews {
 		$this->_limit = $num;
 		
 		return $this;
+	}
+	
+	protected function _set_all_reviews_uri($reviews) {
+		
+		foreach((array) $reviews as $key=>$review) {
+			
+			$url =  'http://www.' . $review->reviews[0]->origin_site . '/shc/s/';
+			
+			//Extract product string from product page url (in element 5)
+			$prod_parts = explode('/', $review->target_url);
+			$reviews[$key]->all_reviews_url = $url . str_replace('p_', 'allmodreviews_', $prod_parts[5]) . '?targetType=seeAllReviews';
+		}
+		
+		return $reviews;
 	}
 	
 }
