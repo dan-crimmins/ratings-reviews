@@ -78,7 +78,7 @@ class RR_User_Reviews {
 	
 	public function get() {
 		
-		$cache_key = md5(get_bloginfo('name') . '-' . $this->_guid);
+		$cache_key = md5('rr_user-' . get_bloginfo('name') . '-' . $this->_guid);
 		
 		if(! $cached = RR_Cache::factory($cache_key)->get()->data) {
 		
@@ -122,13 +122,16 @@ class RR_User_Reviews {
 					$prod_data->storeid = $product->storeid;
 					$prod_data->catalogid = $product->catalogid;
 					$prod_data->product_uri = $product->product_uri;
+					
+					$reviews[$key]->product_data = $prod_data;
+				    $reviews[$key]->edit_link = $this->_edit_link($reviews[$key]);
+					
+				} else {
+					
+					//If there's no product data, remove the review
+					unset($reviews[$key]);
 				}
 				
-				
-				$reviews[$key]->product_data = $prod_data;
-				$reviews[$key]->edit_link = $this->_edit_link($reviews[$key]);
-				
-					
 			}
 			
 			$this->results = $rr->reviews = $reviews;
