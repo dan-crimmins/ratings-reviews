@@ -80,7 +80,7 @@ class RR_User_Reviews {
 		
 		$cache_key = md5('rr_user-' . get_bloginfo('name') . '-' . $this->_guid);
 		
-		//if(! $cached = RR_Cache::factory($cache_key)->get()->data) {
+		if(! $cached = RR_Cache::factory($cache_key)->get()->data) {
 		
 			$rr = RR_Api_Request::factory(array('api' 	=> 'user',
 												  'type'	=> 'userid',
@@ -88,7 +88,7 @@ class RR_User_Reviews {
 									->response();
 									
 		
-		/*} else {
+		} else {
 			
 			$this->results = $cached;
 			$this->is_cached = true;
@@ -97,7 +97,7 @@ class RR_User_Reviews {
 			$this->_paginate();
 			
 			return $this;
-		}*/
+		}
 								
 		if($rr->success && $rr->num_reviews > 0) {
 			
