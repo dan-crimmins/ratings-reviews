@@ -125,6 +125,7 @@ class RR_User_Reviews {
 					
 					$reviews[$key]->product_data = $prod_data;
 				    $reviews[$key]->edit_link = $this->_edit_link($reviews[$key]);
+				    $reviews[$key]->all_reviews_link = $this->_all_reviews_link($reviews[$key]);
 					
 				} else {
 					
@@ -156,6 +157,11 @@ class RR_User_Reviews {
 		
 		return "https://www.{$review->origin_site}/shc/s/ProfileCreateReview?reviewId={$review->review_id}&catalogId={$review->product_data->catalogid}&langId=-1&requestType=edit_review&storeId={$review->product_data->storeid}&i_cntr=1363128024441&loginFlow=Yes";
 		
+	}
+	
+	protected function _all_reviews_link($review) {
+		
+		return "http://www.{$review->origin_site}/" . str_replace('p_', 'allmodreviews_', $review->product_data->product_uri) . "?targetType=seeAllReviews";
 	}
 	
 	protected function _get_store_reviews() {	
