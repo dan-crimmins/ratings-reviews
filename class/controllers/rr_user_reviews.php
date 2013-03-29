@@ -78,7 +78,7 @@ class RR_User_Reviews {
 	
 	public function get() {
 		
-		$cache_key = md5('rr_user-' . get_bloginfo('name') . '-' . $this->_guid);
+		$cache_key = md5('rr_user_profile-' . get_bloginfo('name') . '-' . $this->_guid);
 		
 		if(! $cached = RR_Cache::factory($cache_key)->get()->data) {
 		
