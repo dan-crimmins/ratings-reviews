@@ -7,7 +7,7 @@ Author: Dan Crimmins
 */
 
 //Defined paths
-define('SHC_RR_PATH', WP_PLUGIN_DIR . '/ratings-review/');
+define('SHC_RR_PATH', dirname(__FILE__) . '/');
 define('SHC_RR_CLASS', SHC_RR_PATH . 'class/');
 define('SHC_RR_WIDGETS', SHC_RR_PATH . 'widgets/');
 define('SHC_RR_VIEWS', SHC_RR_PATH . 'views/');
